@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Challenge</title>
+    </head>
+
+    <style>
+        .output {
+            width: 20%;
+            height: 300px;
+            border: 1px solid #000;
+            overflow: auto;
+            padding: 5px;
+        }
+    </style>
+
+    <body>
+        <p>Output...</p>
+        <div class="output" id="output"></div>
+    </body>
+</html>
+
+<script>
+// Función que obtiene los 100 números y los imprime por pantalla con su resultado
+const get = async () => {
+    let element = document.getElementById('output');
+    element.innerHTML = '';
+    const response = await fetch('index.php');
+
+    if (response.ok) {
+        
+        const json = await response.json();
+
+        for(key in json){
+            if( isNaN(json[key]) ){
+                element.innerHTML += json[key] + ' (' + key + ')<br>';
+            }
+            else{
+                element.innerHTML += json[key] + '<br>';
+            }
+        }
+    } else {
+        element.innerHTML = "HTTP-Error: " + response.status;
+    }
+}
+
+get();
+
+</script>
